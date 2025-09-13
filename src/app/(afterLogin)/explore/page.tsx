@@ -1,7 +1,24 @@
-export default function Profile() {
+import SearchFrom from "../_component/SearchForm";
+import Trend from "../_component/Trend";
+import style from './explore.module.css';
+
+export default function Home() {
   return (
-    <main>
-      검색 페이지
+    <main className={style.main}>
+      <div className={style.formZone}>
+        <SearchFrom />
+      </div>
+      <div className={style.trend}>
+        <h3>나를 위한 트렌드</h3>
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+        <Trend />
+      </div>
     </main>
   );
 }
