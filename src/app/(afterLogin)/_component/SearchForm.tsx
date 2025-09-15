@@ -1,6 +1,8 @@
 import style from './rightSearchZone.module.css';
 
-export default function SearchFrom() {
+
+type Props = { q?: string }
+export default function SearchFrom({ q }: Props) {
   return(
     <div style={{marginBottom: 60, width: 'inherit'}}>
       <form className={style.search}>
