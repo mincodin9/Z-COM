@@ -35,7 +35,6 @@ export default function PhotoModal() {
         <Post />
         <Post />
         <Post />
-
       </div>
     </div>
   )

@@ -18,7 +18,6 @@ export default function Home() {
         <Post />
         <Post />
         <Post />
-        <Post />
       </TabProvider>
     </main>
   );

@@ -6,6 +6,7 @@ import 'dayjs/locale/ko';
 import ActionButtons from './ActionButtons';
 import PostArticle from './PostArticle';
 import { faker } from '@faker-js/faker';
+import PostImages from './PostImages';
 
 dayjs.locale('ko');
 dayjs.extend(relativeTime);
@@ -26,11 +27,23 @@ export default function Post({noImage}: Props) {
     createdAt: new Date(),
     Images: [] as any[],
   }
-  if(Math.random() > 0.5 && !noImage) {
-    target.Images.push(
-      { imageId: 1, link: faker.image.url() }
-    )
-  }
+  // if(Math.random() > 0.5 && !noImage) {
+  //   target.Images.push(
+  //     { imageId: 1, link: faker.image.url() },
+  //     { imageId: 2, link: faker.image.url() },
+  //     { imageId: 3, link: faker.image.url() },
+  //     { imageId: 4, link: faker.image.url() }
+  //   )
+  // }
+  const randInt = (min: number, max: number) =>
+    Math.floor(Math.random() * (max - min + 1)) + min;
+  const makeRandomImage = (i: number) =>
+    `https://picsum.photos/414/414?random=${Date.now()}-${i}`;
+  const count = noImage ? 0 : randInt(0, 4);
+  target.Images = Array.from({ length: count }, (_, idx) => ({
+    imageId: idx + 1,
+    link: makeRandomImage(idx + 1),
+  }));
 
   return(
     <PostArticle post={target}>
@@ -54,14 +67,8 @@ export default function Post({noImage}: Props) {
             <span className={style.postDate}>{dayjs(target.createdAt).fromNow(true)}</span>
           </div>
           <div>{target.content}</div>
-          <div className={style.postImageSection}>
-            {target.Images && target.Images.length > 0 && (
-              <Link href={`/${target.User.id}/status/${target.postId}/photo/${target.Images[0].imageId}`}
-              className={style.postImageSection}
-              >
-                <img src={target.Images[0]?.link} alt=""/>
-              </Link>
-            )}
+          <div>
+            <PostImages post={target} />
           </div>
           <ActionButtons />
         </div>
