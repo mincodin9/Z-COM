@@ -16,9 +16,9 @@ export default function LoginModal() {
     setMessage('');
     try {
       await signIn("credentials", {
-      username: id,
-      password,
-      redirect: false,
+        username: id,
+        password,
+        redirect: false,
       })
       router.replace('/home');
     } catch(err) {
