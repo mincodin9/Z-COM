@@ -3,8 +3,9 @@ import style from "./home.module.css";
 import Tab from "./_component/Tab";
 import TabProvider from "./_component/TabProvider";
 import PostForm from "./_component/PostForm";
-import Post from "../_component/Post";
 import { dehydrate, HydrationBoundary, QueryClient } from "@tanstack/react-query";
+import PostRecommends from "./_component/PostRecommends";
+import { getPostRecommends } from "./_lib/getPostRecommends";
 
 async function getPostRecommend() {
   const res = await fetch(`${process.env.NEXT_PUBLIC_BASE_URL}/api/postRecommends`, {
@@ -22,7 +23,7 @@ async function getPostRecommend() {
 
 export default async function Home() {
   const queryClient = new QueryClient();
-  await queryClient.prefetchQuery({queryKey: ['posts', 'recommends'], queryFn: getPostRecommend});
+  await queryClient.prefetchQuery({queryKey: ['posts', 'recommends'], queryFn: getPostRecommends});
   const dehydratedState = dehydrate(queryClient);
 
   return (
@@ -31,13 +32,7 @@ export default async function Home() {
         <TabProvider>
           <Tab />
           <PostForm />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
-          <Post />
+          <PostRecommends />
         </TabProvider>
       </HydrationBoundary>
     </main>
