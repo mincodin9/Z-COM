@@ -27,14 +27,17 @@ export default function Page({noImage, post}: Props) {
   //     { imageId: 4, link: faker.image.url() }
   //   )
   // }
-  const randInt = (min: number, max: number) =>
-    Math.floor(Math.random() * (max - min + 1)) + min;
-  const makeRandomImage = (i: number) =>
-    `https://picsum.photos/414/414?random=${Date.now()}-${i}`;
-  const count = noImage ? 0 : randInt(0, 4);
+  const seededRandom = (seed: number) => {
+    const x = Math.sin(seed) * 10000;
+    return x - Math.floor(x);
+  };
+  const randIntSeed = (seed: number, min: number, max: number) =>
+    Math.floor(seededRandom(seed) * (max - min + 1)) + min;
+  const seed = post.postId;
+  const count = noImage ? 0 : randIntSeed(seed, 0, 4);
   target.Images = Array.from({ length: count }, (_, idx) => ({
     imageId: idx + 1,
-    link: makeRandomImage(idx + 1),
+    link: `https://picsum.photos/seed/${seed}-${idx + 1}/414/414`,
   }));
 
   return(
@@ -59,9 +62,7 @@ export default function Page({noImage, post}: Props) {
             <span className={style.postDate}>{dayjs(target.createdAt).fromNow(true)}</span>
           </div>
           <div>{target.content}</div>
-          <div>
-            <PostImages post={target} />
-          </div>
+          <PostImages post={target} />
           <ActionButtons/>
         </div>
       </div>

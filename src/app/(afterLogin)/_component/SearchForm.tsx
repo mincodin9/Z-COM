@@ -1,8 +1,8 @@
 import style from './rightSearchZone.module.css';
 import Form from "next/form";
 
-type Props = { q?: string }
-export default function SearchFrom({ q }: Props) {
+type Props = { q?: string, f?: string, pf?: string }
+export default function SearchFrom({ q, pf, f }: Props) {
   return(
     <div style={{marginBottom: 60, width: 'inherit'}}>
       <Form action="/search" className={style.search}>
@@ -13,6 +13,8 @@ export default function SearchFrom({ q }: Props) {
           </g>
         </svg>
         <input type="search" name="q" defaultValue={q} style={{flex: 1, borderRadius: 21}}/>
+        <input type="hidden" name="pf" defaultValue={pf} style={{flex: 1, borderRadius: 21}}/>
+        <input type="hidden" name="f" defaultValue={f} style={{flex: 1, borderRadius: 21}}/>
       </Form>
     </div>
   )
